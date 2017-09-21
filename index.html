@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<title>Calculate the rate of heat flow</title>
+<form onsubmit="submit_form(this); return false;">
+	<label>
+		Cuboid dimentions (m):<br>
+		a: <input name="a" value="1">
+		&nbsp; b: <input name="b" value="1">
+		&nbsp; c: <input name="c" value="1">
+	</label>
+	<br>
+	<br>
+	<label>
+		Inside temperature, t1 (&deg;C):<br>
+		<input name="t1" value="25">
+	</label>
+	<br>
+	<br>
+	<label>
+		Outside temperature, t2 (&deg;C):<br>
+		<input name="t2" value="-30">
+	</label>
+	<br>
+	<br>
+	<label>
+		Thermal conductivity, k:<br>
+		<select name="k" onchange="this.form['k_custom'].disabled = (this.value != '')">
+			<option value="0.03">Extruded polystyrene foam - 0.03</option>
+			<option value="0.035">Mineral wool - 0.035</option>
+			<option value="">Custom</option>
+		</select>
+		<input name="k_custom" value="" disabled>
+	</label>
+	<br>
+	<br>
+	<label>
+		Thickness, l (m):<br>
+		<input name="l" value="0.05">
+	</label>
+	<br>
+	<br>
+	<input type="submit" value="Calculate">
+</form>
+<br>
+<br>
+Formula:<br>
+2*(a*b + b*c + a*c) * (t1 - t2) * k / l<br>
+<br>
+<span id="result"></span>
+<script>
+var submit_form = function (self) {
+	var a = self['a'].value
+		, b = self['b'].value
+		, c = self['c'].value
+		, t1 = self['t1'].value
+		, t2 = self['t2'].value
+		, k = (self['k'].value.length ? self['k'].value : self['k_custom'].value)
+		, l = self['l'].value
+	document.getElementById('result').innerHTML =
+		'Result:<br>2*(' + a + '*' + b + ' + ' + b + '*' + c + ' + ' + a + '*' + c + ') * (' + t1 + ' - ' + t2 + ') * ' + k + ' / ' + l
+		+ ' = <b>' + (2 * (a * b + b * c + a * c) * (t1 - t2) * k / l) + ' W</b>'
+}
+</script>
